@@ -1,9 +1,49 @@
 from fastapi import FastAPI
-from scraper import Hamrorashifal
+from scraper import Hamrorashifal, WeeklyRashifal
 
-data = Hamrorashifal
+dailydata = Hamrorashifal
+rashifaldata = WeeklyRashifal
+
+rashilist = [
+    "Mesh",
+    "Brish",
+    "Mithun",
+    "Karkat",
+    "Singha",
+    "Kanya",
+    "Tula",
+    "Brischik",
+    "Dhanu",
+    "Makar",
+    "Kumbha",
+    "Meen"
+]
 
 app = FastAPI()
-@app.get("")
+@app.get("/")
 async def dailyrashifal():
-   return data.scraperashifal(data)
+   return dailydata.scraperashifal(dailydata)
+
+@app.get("/weekly")
+async def weeklyrashifal():
+   return rashifaldata.weeklyrashifal(rashifaldata,rashilist,"weekly")
+
+@app.get("/monthly")
+async def monthlyrashifal():
+   return rashifaldata.weeklyrashifal(rashifaldata,rashilist,"monthly")
+
+@app.get("/yearly")
+async def yearlyrashifal():
+   return rashifaldata.weeklyrashifal(rashifaldata,rashilist,"yearly")
+
+# list = [
+#     "weekly",
+#     "monthly",
+#     "yearly"
+# ]
+
+
+
+
+
+

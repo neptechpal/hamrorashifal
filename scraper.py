@@ -4,11 +4,14 @@ import requests
 from urllib import request
 
 class Hamrorashifal:
+    
     def scraperashifal(self):
+        base = "https://www.hamropatro.com/"
         url = "https://www.hamropatro.com/rashifal/"
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         rashifals = soup.find_all('div',{"class":"item"})
+        
 
         rashifallist = []
 
@@ -17,17 +20,66 @@ class Hamrorashifal:
         for rashifal in rashifals:
           items = {
                 'title': rashifal.find('h3').text.strip(),
-                'description': rashifal.find('div',{"class":"desc"}).text.strip(),
-                'image':rashifal.find('img')['src']
+                'description':  rashifal.find('div',{"class":"desc"}).text.strip(),
+                'image': base+rashifal.find('img')['src']
                    }
           rashifallist.append(items)
-        #   print(rashifallist)
+          print(rashifallist)
           
         return rashifallist
-            
-        # items = soup.find_all('a')
-     
 
-       
-        # print("Rashifals are",rashifals)
-Hamrorashifal.scraperashifal(Hamrorashifal,)
+
+myverydata = Hamrorashifal()
+myverydata.scraperashifal()
+
+mylist = [
+    "Mesh",
+    "Brish",
+    "Mithun",
+    "Karkat",
+    "Singha",
+    "Kanya",
+    "Tula",
+    "Brischik",
+    "Dhanu",
+    "Makar",
+    "Kumbha",
+    "Meen"]
+
+class WeeklyRashifal:
+ def weeklyrashifal(self,mylist,time):
+    rashifallisty = []
+    for items in mylist:
+        url = "https://www.hamropatro.com/rashifal/"+time+"/"+items+"/"
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        title_head = soup.find_all('h2',{"class":"maintitle"})
+        description = soup.find_all('div',{"class":"desc"})
+
+        items = {
+
+        }
+
+        
+
+        # print(description)
+        for titles in title_head:
+            mytitle = titles.find('span').text
+            items['title'] = mytitle
+
+        for descriptions in description:
+            desc = descriptions.find('p').text.strip()
+            items['description'] = desc
+            # print(desc)
+
+        
+            # print(mytitle)
+        
+        
+        rashifallisty.append(items)
+        
+    # print(rashifallist)
+    return rashifallisty
+
+# data = WeeklyRashifal()
+# data.weeklyrashifal(mylist,"weekly")
