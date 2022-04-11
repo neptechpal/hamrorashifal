@@ -1,5 +1,23 @@
 from fastapi import FastAPI
 from scraper import Hamrorashifal, WeeklyRashifal
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 dailydata = Hamrorashifal
 rashifaldata = WeeklyRashifal
@@ -19,7 +37,7 @@ rashilist = [
     "Meen"
 ]
 
-app = FastAPI()
+
 @app.get("/")
 async def dailyrashifal():
    return dailydata.scraperashifal(dailydata)
@@ -36,11 +54,7 @@ async def monthlyrashifal():
 async def yearlyrashifal():
    return rashifaldata.weeklyrashifal(rashifaldata,rashilist,"yearly")
 
-# list = [
-#     "weekly",
-#     "monthly",
-#     "yearly"
-# ]
+
 
 
 

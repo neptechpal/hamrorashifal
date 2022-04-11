@@ -70,10 +70,6 @@ class WeeklyRashifal:
         for descriptions in description:
             desc = descriptions.find('p').text.strip()
             items['description'] = desc
-            # print(desc)
-
-        
-            # print(mytitle)
         
         
         rashifallisty.append(items)
@@ -81,5 +77,3 @@ class WeeklyRashifal:
     # print(rashifallist)
     return rashifallisty
 
-# data = WeeklyRashifal()
-# data.weeklyrashifal(mylist,"weekly")
